@@ -240,18 +240,6 @@ class MainRobot (wpilib.IterativeRobot):
             else:
                 self.readyToShoot = False
             
-            # TODO: what does this do??
-            if self.readyToShoot and self.AUTO_SHOOT_ENABLED:
-                if averageFlySpeed < 1900:
-                    self.LeftFly.set(2000)
-                    self.RightFly.set(-2000)
-                elif averageFlySpeed > 1900:
-                    self.LeftFly.set(2000)
-                    self.RightFly.set(-2000)
-                    self.Intake.set(1)
-                else: # flywheels are at the right speed
-                    self.Shooter.update(False, False, False, False)
-            
             if self.MoveGamepad.getRawButton(Gamepad.LJ): # faster button
                 self.slowed = 1
             elif self.MoveGamepad.getRawButton(Gamepad.LB): # slower button
@@ -278,10 +266,16 @@ class MainRobot (wpilib.IterativeRobot):
             
             self.FilterDrive.drive(magnitude, direction, turn)
             
-            self.Shooter.update(self.ShootGamepad.getRawButton(Gamepad.B),\
-                                self.ShootGamepad.getRawButton(Gamepad.X),\
-                                self.ShootGamepad.getRawButton(Gamepad.A),\
-                                self.ShootGamepad.getRawButton(Gamepad.Y))
+            if self.readyToShoot and self.AUTO_SHOOT_ENABLED:
+                self.LeftFly.set(2000)
+                self.RightFly.set(-2000)
+                if averageFlySpeed > 1900:
+                    self.Intake.set(1)
+            else:
+                self.Shooter.update(self.ShootGamepad.getRawButton(Gamepad.B),\
+                                    self.ShootGamepad.getRawButton(Gamepad.X),\
+                                    self.ShootGamepad.getRawButton(Gamepad.A),\
+                                    self.ShootGamepad.getRawButton(Gamepad.Y))
 
 if __name__ == "__main__":
     wpilib.run(MainRobot)
