@@ -2,6 +2,8 @@
 
 Code for the JellyFISH!
 
+There's a lot of extra code here. The `seamonsters` library is now permenantly being kept in the `SeamonstersTemplate` repository. And any robot code not tied to the 2016 competition (like the Project Stingray code) will be moved to the `SeamonstersDev` repository. We won't be updating this repository much any more, other than cleanup.
+
 Deploy with `./deploy.sh` or `.\deploy.bat` (Windows). Test with `./test.sh` or
 `.\test.bat` (Windows).
 
